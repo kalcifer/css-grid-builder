@@ -18,6 +18,7 @@ class Settings extends React.Component {
   render() {
     return (
       <div>
+        <h2>Settings Panel</h2>
         <div>
           <label>No of rows</label>
           <input

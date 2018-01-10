@@ -27,7 +27,7 @@ const Header = () => (
             textDecoration: "none"
           }}
         >
-          Gatsby
+          CSS Grid Builder
         </Link>
       </h1>
     </div>

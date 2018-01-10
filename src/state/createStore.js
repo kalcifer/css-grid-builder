@@ -8,7 +8,7 @@ const reducer = (state, action) => {
   }
   if (action.type === `UPDATE_COLUMNS`) {
     return Object.assign({}, state, {
-      rows: action.payload.columns
+      columns: action.payload.columns
     });
   }
   return state;

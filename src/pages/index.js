@@ -8,6 +8,7 @@ const Page = styled.div`
   position: relative;
   grid-template-rows: 2fr 1fr;
   grid-template-columns: 1fr 1fr;
+  margin: 10px;
 `;
 
 const CodeSnippet = styled.div`
@@ -18,7 +19,7 @@ const IndexPage = () => (
   <Page>
     <Preview />
     <Settings />
-    <CodeSnippet>Copy paste from here</CodeSnippet>
+    <CodeSnippet>Copy paste the code snippet from here</CodeSnippet>
   </Page>
 );
 
