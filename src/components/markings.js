@@ -3,9 +3,8 @@ import styled from "styled-components";
 
 const RowWrapper = styled.div`
   position: absolute;
-  top: 10px;
-  height: 95%;
-  width: 5%;
+  height: 100%;
+  width: 3%;
   display: grid;
   ${props =>
     props.rows > 0 ? `grid-template-rows: repeat(${props.rows}, 1fr)` : null};
@@ -21,9 +20,8 @@ const ColumnMarking = styled.div`
 
 const ColumnWrapper = styled.div`
   position: absolute;
-  left: 10px;
-  height: 5%;
-  width: 95%;
+  height: 3%;
+  width: 100%;
   display: grid;
   ${props =>
     props.columns > 0
