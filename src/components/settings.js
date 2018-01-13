@@ -37,12 +37,16 @@ class Settings extends React.Component {
             onChange={this.onColumnChange}
           />
         </div>
+        <div>
+          <label>No of selected grid items:</label>
+          <div>{this.props.selectedItems.length}</div>
+        </div>
       </div>
     );
   }
 }
 
 export default connect(state => {
-  const { rows, columns } = state;
-  return { rows, columns };
+  const { rows, columns, selectedItems } = state;
+  return { rows, columns, selectedItems };
 })(Settings);

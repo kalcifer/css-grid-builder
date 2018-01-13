@@ -11,3 +11,10 @@ export const updateColumns = columns => ({
     columns
   }
 });
+
+export const onSelected = id => ({
+  type: "ON_SELECTED",
+  payload: {
+    id
+  }
+});

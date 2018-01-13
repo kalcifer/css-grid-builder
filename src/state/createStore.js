@@ -7,7 +7,8 @@ const reducer = (state, action) => {
     action.payload.rows > 0
   ) {
     return Object.assign({}, state, {
-      rows: action.payload.rows
+      rows: action.payload.rows,
+      selectedItems: []
     });
   }
   if (
@@ -16,13 +17,27 @@ const reducer = (state, action) => {
     action.payload.columns > 0
   ) {
     return Object.assign({}, state, {
-      columns: action.payload.columns
+      columns: action.payload.columns,
+      selectedItems: []
+    });
+  }
+  if (action.type === "ON_SELECTED") {
+    const { id } = action.payload;
+    const selected = state.selectedItems.map(val => val);
+    const itemIndex = selected.indexOf(id);
+    if (itemIndex === -1) {
+      selected.push(id);
+    } else {
+      selected.splice(itemIndex, 1);
+    }
+    return Object.assign({}, state, {
+      selectedItems: selected
     });
   }
   return state;
 };
 
-const initialState = { rows: 2, columns: 2 };
+const initialState = { rows: 2, columns: 2, selectedItems: [] };
 
 const createStore = () => reduxCreateStore(reducer, initialState);
 export default createStore;
