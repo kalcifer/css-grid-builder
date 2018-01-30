@@ -18,26 +18,19 @@ class GridItem extends React.Component {
   constructor() {
     super();
     this.onClick = this.onClick.bind(this);
-    this.state = {
-      isSelected: false
-    };
+
   }
   onClick() {
-    this.setState(
-      {
-        isSelected: !this.state.isSelected
-      },
-      () => this.props.onSelected(this.props.id)
-    );
+    this.props.onSelected(this.props.id)
   }
   render() {
-    const { rows, columns } = this.props;
+    const { rows, columns, selected } = this.props;
     return (
       <StyledItem
         onClick={this.onClick}
         rows={rows}
         columns={columns}
-        selected={this.state.isSelected}
+        selected={selected}
       />
     );
   }

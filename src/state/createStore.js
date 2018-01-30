@@ -29,35 +29,51 @@ const MIN = 0;
 const reducer = (state, action) => {
   if (
     action.type === `UPDATE_ROWS` &&
-    MIN < action.payload.rows < MAX
+    MIN < action.payload.rows && action.payload.rows < MAX
   ) {
+    const rows = parseInt(action.payload.rows);
     return Object.assign({}, {
       sketch: {
         grid: {
-          grid_template_rows: action.payload.rows,
+          grid_template_rows: rows,
           grid_template_columns: state.sketch.grid.grid_template_columns
         },
-        boxes: generateBoxes({ rows: action.payload.rows })
+        boxes: generateBoxes({ rows: rows, columns: state.sketch.grid.grid_template_columns })
       }
     });
   }
   if (
     action.type === `UPDATE_COLUMNS` &&
-    MIN < action.payload.cols < MAX
+    MIN < action.payload.columns && action.payload.columns < MAX
   ) {
+    const col = parseInt(action.payload.columns)
     return Object.assign({}, {
       sketch: {
         grid: {
           grid_template_rows: state.sketch.grid.grid_template_rows,
-          grid_template_columns: action.payload.columns
+          grid_template_columns: col
         },
-        boxes: generateBoxes({ columns: action.payload.columns })
+        boxes: generateBoxes({ rows: state.sketch.grid.grid_template_rows, columns: col })
       }
     });
   }
   if (action.type === "ON_SELECTED") {
     const { id } = action.payload;
-    updateSketch({ itemId: id });
+    const { boxes } = state.sketch;
+    const newState = Object.assign({}, state, {
+      sketch: {
+        grid: state.sketch.grid,
+        boxes: Object.keys(boxes).reduce((prev, key) => {
+          if (`${id}` === key) {
+            prev[key] = Object.assign({}, boxes[key], {
+              selected: !boxes[key].selected
+            })
+          }
+          return prev;
+        }, Object.assign({}, boxes))
+      }
+    });
+    return newState;
   }
   return state;
 };
@@ -66,11 +82,13 @@ const generateBoxes = ({ rows, columns }) => {
   const boxes = {};
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < columns; c++) {
-      boxes[`${r * c}`] = {
+      const id = r * columns + c
+      boxes[id] = {
         row_start: r,
         column_start: c,
         row_size: 1,
-        column_size: 1
+        column_size: 1,
+        selected: false
       }
     }
   }
@@ -92,25 +110,29 @@ const initialState = {
         'row_start': 0,
         'column_start': 0,
         'row_size': 1,
-        'column_size': 1
+        'column_size': 1,
+        'selected': false
       },
       '1': {
         'row_start': 0,
         'column_start': 1,
         'row_size': 1,
-        'column_size': 1
+        'column_size': 1,
+        'selected': false
       },
       '2': {
         'row_start': 1,
         'column_start': 0,
         'row_size': 1,
-        'column_size': 1
+        'column_size': 1,
+        'selected': false
       },
       '3': {
         'row_start': 1,
         'column_start': 1,
         'row_size': 1,
-        'column_size': 1
+        'column_size': 1,
+        'selected': false
       }
     }
   }

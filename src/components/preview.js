@@ -36,19 +36,16 @@ const GridPreview = props => {
         {props.rows && <GridRowMarkings rows={rows} />}
         {props.columns && <GridColumnMarkings columns={columns} />}
         <Grid rows={rows} columns={columns}>
-          {new Array(columns * rows)
-            .fill(1)
+          {Object.keys(props.boxes)
             .map((val, index) => {
-              const gridItem = {
-                id: index,
-                rowStart: index % columns
-              }
+              const box = props.boxes[val];
               return (
                 <GridItem
                   columns={columns}
                   rows={rows}
-                  key={index}
-                  id={index}
+                  key={val}
+                  id={val}
+                  selected={box.selected}
                   onSelected={props.onSelected}
                 />
               )
@@ -64,7 +61,8 @@ export default connect(
     const { grid_template_rows: rows, grid_template_columns: columns } = state.sketch.grid;
     return {
       rows,
-      columns
+      columns,
+      boxes: state.sketch.boxes
     };
   },
   dispatch => {
