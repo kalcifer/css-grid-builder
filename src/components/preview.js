@@ -24,7 +24,7 @@ const GridPreview = props => {
     ${props =>
       props.columns > 0
         ? `grid-template-columns: repeat(${props.columns},  ${400 /
-            props.columns}px)`
+        props.columns}px)`
         : null};
     width: 100%;
     height: 100%;
@@ -38,15 +38,21 @@ const GridPreview = props => {
         <Grid rows={rows} columns={columns}>
           {new Array(columns * rows)
             .fill(1)
-            .map((val, index) => (
-              <GridItem
-                columns={columns}
-                rows={rows}
-                key={index}
-                id={index}
-                onSelected={props.onSelected}
-              />
-            ))}
+            .map((val, index) => {
+              const gridItem = {
+                id: index,
+                rowStart: index % columns
+              }
+              return (
+                <GridItem
+                  columns={columns}
+                  rows={rows}
+                  key={index}
+                  id={index}
+                  onSelected={props.onSelected}
+                />
+              )
+            })}
         </Grid>
       </Panel>
     </div>
@@ -55,7 +61,7 @@ const GridPreview = props => {
 
 export default connect(
   state => {
-    const { rows, columns } = state;
+    const { grid_template_rows: rows, grid_template_columns: columns } = state.sketch.grid;
     return {
       rows,
       columns

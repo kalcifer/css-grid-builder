@@ -39,7 +39,7 @@ class Settings extends React.Component {
         </div>
         <div>
           <label>No of selected grid items:</label>
-          <div>{this.props.selectedItems.length}</div>
+          <div>{this.props.selectedItems}</div>
         </div>
       </div>
     );
@@ -47,6 +47,8 @@ class Settings extends React.Component {
 }
 
 export default connect(state => {
-  const { rows, columns, selectedItems } = state;
-  return { rows, columns, selectedItems };
+  const { grid, boxes } = state.sketch;
+  const { grid_template_columns: columns, grid_template_rows: rows } = grid;
+  const selectedItems = Object.keys(boxes).length;
+  return { rows, columns, selectedItems }
 })(Settings);
